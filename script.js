@@ -107,7 +107,8 @@ function moveSnake() {
     // Check game over conditions
     if (gameOver()) {
         gameRunning = false;
-        return;
+        alert("Game Over! Your score was " + score);
+        location.reload(); // Reload the page to restart the game
     }
 }
 
@@ -116,7 +117,6 @@ function gameOver() {
     // Check if snake hits the wall or itself
     for (let i = 4; i < snake.length; i++) {
         if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
-            alert("Game Over! Your score was " + score);
             return true;
         }
     }
@@ -127,7 +127,6 @@ function gameOver() {
     const hitTopWall = snake[0].y < 0;
     const hitBottomWall = snake[0].y >= CANVAS_SIZE;
     if (hitLeftWall || hitRightWall || hitTopWall || hitBottomWall) {
-        alert("Game Over! Your score was " + score);
         return true;
     }
 
