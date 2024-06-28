@@ -15,8 +15,8 @@
             background-color: #000;
         }
         #gameCanvas {
-            width: 400px; /* Reduced canvas size for testing */
-            height: 400px; /* Reduced canvas size for testing */
+            width: 400px;
+            height: 400px;
             border: 2px solid #000;
             background-color: #111; /* Dark background */
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Neon glow effect */
@@ -204,9 +204,10 @@
             dy = 0;
             score = 0;
 
+            // Adjust initial snake position to fit within canvas
             snake.push({ x: CANVAS_SIZE / 2, y: CANVAS_SIZE / 2 });
             for (let i = 1; i < INITIAL_SNAKE_LENGTH; i++) {
-                snake.push({ x: CANVAS_SIZE / 2 - i * GRID_SIZE, y: CANVAS_SIZE / 2 });
+                snake.push({ x: (CANVAS_SIZE / 2) - i * GRID_SIZE, y: CANVAS_SIZE / 2 });
             }
 
             food = createFood();
