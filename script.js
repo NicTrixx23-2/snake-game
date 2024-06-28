@@ -11,6 +11,7 @@ let dx = GRID_SIZE;
 let dy = 0;
 let changingDirection = false;
 let score = 0;
+let gameRunning = false; // Flag to track if the game is running
 
 // Get the canvas element and context
 const gameCanvas = document.getElementById("gameCanvas");
@@ -21,10 +22,17 @@ initializeGame();
 
 // Main function to start the game
 function initializeGame() {
-    // Reset snake position and direction
-    snake = [{ x: 200, y: 200 }];
+    // Reset variables
+    snake = [];
+    dx = GRID_SIZE;
+    dy = 0;
+    score = 0;
+    gameRunning = true;
+
+    // Set up initial snake position
+    snake.push({ x: CANVAS_SIZE / 2, y: CANVAS_SIZE / 2 });
     for (let i = 1; i < INITIAL_SNAKE_LENGTH; i++) {
-        snake.push({ x: 200 - i * GRID_SIZE, y: 200 });
+        snake.push({ x: CANVAS_SIZE / 2 - i * GRID_SIZE, y: CANVAS_SIZE / 2 });
     }
 
     // Place initial food
@@ -47,7 +55,7 @@ function createFood() {
 
 // Main game loop
 function main() {
-    if (gameOver()) return;
+    if (!gameRunning) return;
 
     setTimeout(function onTick() {
         changingDirection = false;
@@ -81,6 +89,8 @@ function drawSnakePart(snakePart) {
 
 // Function to move the snake
 function moveSnake() {
+    if (!gameRunning) return;
+
     const head = { x: snake[0].x + dx, y: snake[0].y + dy };
     snake.unshift(head);
 
@@ -93,6 +103,12 @@ function moveSnake() {
     } else {
         snake.pop();
     }
+
+    // Check game over conditions
+    if (gameOver()) {
+        gameRunning = false;
+        return;
+    }
 }
 
 // Function to check if the game is over
@@ -101,7 +117,6 @@ function gameOver() {
     for (let i = 4; i < snake.length; i++) {
         if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
             alert("Game Over! Your score was " + score);
-            location.reload(); // Reload the page to restart the game
             return true;
         }
     }
@@ -113,7 +128,6 @@ function gameOver() {
     const hitBottomWall = snake[0].y >= CANVAS_SIZE;
     if (hitLeftWall || hitRightWall || hitTopWall || hitBottomWall) {
         alert("Game Over! Your score was " + score);
-        location.reload(); // Reload the page to restart the game
         return true;
     }
 
@@ -130,37 +144,41 @@ function drawFood() {
 
 // Function to handle keyboard input
 function changeDirection(event) {
-    const LEFT_KEY = 37;
-    const RIGHT_KEY = 39;
-    const UP_KEY = 38;
-    const DOWN_KEY = 40;
+    const W_KEY = 87;
+    const A_KEY = 65;
+    const S_KEY = 83;
+    const D_KEY = 68;
 
     if (changingDirection) return;
     changingDirection = true;
 
     const keyPressed = event.keyCode;
-    const goingUp = dy === -GRID_SIZE;
-    const goingDown = dy === GRID_SIZE;
-    const goingRight = dx === GRID_SIZE;
-    const goingLeft = dx === -GRID_SIZE;
 
-    if (keyPressed === LEFT_KEY && !goingRight) {
-        dx = -GRID_SIZE;
-        dy = 0;
-    }
-
-    if (keyPressed === UP_KEY && !goingDown) {
-        dx = 0;
-        dy = -GRID_SIZE;
-    }
-
-    if (keyPressed === RIGHT_KEY && !goingLeft) {
-        dx = GRID_SIZE;
-        dy = 0;
-    }
-
-    if (keyPressed === DOWN_KEY && !goingUp) {
-        dx = 0;
-        dy = GRID_SIZE;
+    // Update snake direction based on WASD keys
+    switch (keyPressed) {
+        case A_KEY:
+            if (dx !== GRID_SIZE) {
+                dx = -GRID_SIZE;
+                dy = 0;
+            }
+            break;
+        case W_KEY:
+            if (dy !== GRID_SIZE) {
+                dx = 0;
+                dy = -GRID_SIZE;
+            }
+            break;
+        case D_KEY:
+            if (dx !== -GRID_SIZE) {
+                dx = GRID_SIZE;
+                dy = 0;
+            }
+            break;
+        case S_KEY:
+            if (dy !== -GRID_SIZE) {
+                dx = 0;
+                dy = GRID_SIZE;
+            }
+            break;
     }
 }
