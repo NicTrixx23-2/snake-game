@@ -17,7 +17,7 @@ let gameRunning = false; // Flag to track if the game is running
 const gameCanvas = document.getElementById("gameCanvas");
 const ctx = gameCanvas.getContext("2d");
 
-// Add event listener for keyboard input to start game
+// Event listener to start the game when 'Q' is pressed
 document.addEventListener("keydown", function(event) {
     if (event.key === "q" && !gameRunning) {
         startGame();
@@ -26,8 +26,9 @@ document.addEventListener("keydown", function(event) {
 
 // Function to start the game
 function startGame() {
-    initializeGame();
     gameRunning = true;
+    initializeGame();
+    main();
 }
 
 // Function to initialize the game
@@ -47,8 +48,8 @@ function initializeGame() {
     // Place initial food
     food = createFood();
 
-    // Start game loop
-    main();
+    // Update score display
+    document.getElementById("score").innerHTML = "Score: " + score;
 }
 
 // Function to create food at a random position
@@ -88,9 +89,7 @@ function drawSnake() {
 // Function to draw each part of the snake
 function drawSnakePart(snakePart) {
     ctx.fillStyle = "#008000";
-    ctx.strokeStyle = "#000";
     ctx.fillRect(snakePart.x, snakePart.y, GRID_SIZE, GRID_SIZE);
-    ctx.strokeRect(snakePart.x, snakePart.y, GRID_SIZE, GRID_SIZE);
 }
 
 // Function to move the snake
@@ -142,48 +141,49 @@ function gameOver() {
 // Function to draw the food
 function drawFood() {
     ctx.fillStyle = "#FF0000";
-    ctx.strokeStyle = "#000";
     ctx.fillRect(food.x, food.y, GRID_SIZE, GRID_SIZE);
-    ctx.strokeRect(food.x, food.y, GRID_SIZE, GRID_SIZE);
 }
 
-// Function to handle keyboard input
-function changeDirection(event) {
-    const W_KEY = 87;
-    const A_KEY = 65;
-    const S_KEY = 83;
-    const D_KEY = 68;
+// Function to handle keyboard input for snake movement
+document.addEventListener("keydown", function(event) {
+    const LEFT_KEY = 37;
+    const UP_KEY = 38;
+    const RIGHT_KEY = 39;
+    const DOWN_KEY = 40;
 
+    if (!gameRunning) return;
+
+    // Prevent snake from reversing
     if (changingDirection) return;
     changingDirection = true;
 
     const keyPressed = event.keyCode;
 
-    // Update snake direction based on WASD keys
+    // Update snake direction based on arrow keys
     switch (keyPressed) {
-        case A_KEY:
+        case LEFT_KEY:
             if (dx !== GRID_SIZE) {
                 dx = -GRID_SIZE;
                 dy = 0;
             }
             break;
-        case W_KEY:
+        case UP_KEY:
             if (dy !== GRID_SIZE) {
                 dx = 0;
                 dy = -GRID_SIZE;
             }
             break;
-        case D_KEY:
+        case RIGHT_KEY:
             if (dx !== -GRID_SIZE) {
                 dx = GRID_SIZE;
                 dy = 0;
             }
             break;
-        case S_KEY:
+        case DOWN_KEY:
             if (dy !== -GRID_SIZE) {
                 dx = 0;
                 dy = GRID_SIZE;
             }
             break;
     }
-}
+});
