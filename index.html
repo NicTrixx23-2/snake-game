@@ -12,21 +12,18 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #000;
         }
         #gameCanvas {
             border: 2px solid #000;
+            background-color: #111; /* Dark background */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Neon glow effect */
         }
         #score {
+            color: #fff; /* White text */
             text-align: center;
             font-size: 24px;
             margin-top: 10px;
-        }
-        #startButton {
-            margin-top: 20px;
-            font-size: 20px;
-            padding: 10px 20px;
-            cursor: pointer;
         }
         .control-buttons {
             display: flex;
@@ -38,11 +35,33 @@
             margin: 0 10px;
             padding: 8px 16px;
             cursor: pointer;
+            background-color: #333; /* Dark button background */
+            color: #fff; /* White text */
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Neon glow effect on buttons */
+        }
+        .control-buttons button:hover {
+            background-color: #444; /* Darker background on hover */
+        }
+        #startButton {
+            margin-top: 20px;
+            font-size: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #333; /* Dark button background */
+            color: #fff; /* White text */
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Neon glow effect on button */
+        }
+        #startButton:hover {
+            background-color: #444; /* Darker background on hover */
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <canvas id="gameCanvas" width="800" height="800"></canvas>
     <div id="score">Score: 0</div>
     <div class="control-buttons">
         <button id="upButton">↑</button>
@@ -56,8 +75,8 @@
         // JavaScript (embedded script.js)
 
         // Constants
-        const GRID_SIZE = 20;
-        const CANVAS_SIZE = 400;
+        const GRID_SIZE = 40; // Adjusted for larger canvas
+        const CANVAS_SIZE = 800; // Adjusted for larger canvas
         const INITIAL_SNAKE_LENGTH = 5;
         const GAME_SPEED = 100; // in milliseconds
 
@@ -228,7 +247,7 @@
 
         // Function to draw each part of the snake
         function drawSnakePart(snakePart) {
-            ctx.fillStyle = "#008000";
+            ctx.fillStyle = "#0f0"; /* Neon green */
             ctx.fillRect(snakePart.x, snakePart.y, GRID_SIZE, GRID_SIZE);
         }
 
@@ -276,7 +295,7 @@
 
         // Function to draw the food
         function drawFood() {
-            ctx.fillStyle = "#FF0000";
+            ctx.fillStyle = "#f00"; /* Neon red */
             ctx.fillRect(food.x, food.y, GRID_SIZE, GRID_SIZE);
         }
     </script>
