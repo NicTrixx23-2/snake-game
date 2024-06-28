@@ -12,16 +12,22 @@ let dy = 0;
 let changingDirection = false;
 let score = 0;
 let gameRunning = false; // Flag to track if the game is running
-let gameStarted = false; // Flag to track if the game has started
 
 // Get the canvas element and context
 const gameCanvas = document.getElementById("gameCanvas");
 const ctx = gameCanvas.getContext("2d");
 
-// Main function to start the game
+// Add event listener for keyboard input to start game
+document.addEventListener("keydown", function(event) {
+    if (event.key === "q" && !gameRunning) {
+        startGame();
+    }
+});
+
+// Function to start the game
 function startGame() {
     initializeGame();
-    gameStarted = true;
+    gameRunning = true;
 }
 
 // Function to initialize the game
@@ -31,7 +37,6 @@ function initializeGame() {
     dx = GRID_SIZE;
     dy = 0;
     score = 0;
-    gameRunning = true;
 
     // Set up initial snake position
     snake.push({ x: CANVAS_SIZE / 2, y: CANVAS_SIZE / 2 });
@@ -44,9 +49,6 @@ function initializeGame() {
 
     // Start game loop
     main();
-    
-    // Add event listener for keyboard input
-    document.addEventListener("keydown", changeDirection);
 }
 
 // Function to create food at a random position
@@ -147,8 +149,6 @@ function drawFood() {
 
 // Function to handle keyboard input
 function changeDirection(event) {
-    if (!gameStarted) return; // Game hasn't started yet
-
     const W_KEY = 87;
     const A_KEY = 65;
     const S_KEY = 83;
