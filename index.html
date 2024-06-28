@@ -15,6 +15,8 @@
             background-color: #000;
         }
         #gameCanvas {
+            width: 800px;
+            height: 800px;
             border: 2px solid #000;
             background-color: #111; /* Dark background */
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Neon glow effect */
@@ -61,7 +63,7 @@
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="800"></canvas>
+    <canvas id="gameCanvas"></canvas>
     <div id="score">Score: 0</div>
     <div class="control-buttons">
         <button id="upButton">↑</button>
@@ -75,8 +77,8 @@
         // JavaScript (embedded script.js)
 
         // Constants
-        const GRID_SIZE = 40; // Adjusted for larger canvas
-        const CANVAS_SIZE = 800; // Adjusted for larger canvas
+        const GRID_SIZE = 20; // Adjusted for smaller grid
+        const CANVAS_SIZE = 800; // Canvas size remains the same
         const INITIAL_SNAKE_LENGTH = 5;
         const GAME_SPEED = 100; // in milliseconds
 
