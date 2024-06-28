@@ -12,15 +12,19 @@ let dy = 0;
 let changingDirection = false;
 let score = 0;
 let gameRunning = false; // Flag to track if the game is running
+let gameStarted = false; // Flag to track if the game has started
 
 // Get the canvas element and context
 const gameCanvas = document.getElementById("gameCanvas");
 const ctx = gameCanvas.getContext("2d");
 
-// Start game
-initializeGame();
-
 // Main function to start the game
+function startGame() {
+    initializeGame();
+    gameStarted = true;
+}
+
+// Function to initialize the game
 function initializeGame() {
     // Reset variables
     snake = [];
@@ -143,6 +147,8 @@ function drawFood() {
 
 // Function to handle keyboard input
 function changeDirection(event) {
+    if (!gameStarted) return; // Game hasn't started yet
+
     const W_KEY = 87;
     const A_KEY = 65;
     const S_KEY = 83;
