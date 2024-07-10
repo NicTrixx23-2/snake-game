@@ -9,7 +9,7 @@
         /* CSS styles */
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -54,8 +54,6 @@
     <button id="startButton">Start</button>
 
     <script>
-        // JavaScript (embedded script.js)
-
         // Constants
         const GRID_SIZE = 20;
         const CANVAS_SIZE = 400;
@@ -74,6 +72,10 @@
         // Get the canvas element and context
         const gameCanvas = document.getElementById("gameCanvas");
         const ctx = gameCanvas.getContext("2d");
+
+        // Load the food image
+        const foodImage = new Image();
+        foodImage.src = 'food.png'; // Ensure the path is correct based on your repo structure
 
         // Start button element
         const startButton = document.getElementById("startButton");
@@ -277,8 +279,7 @@
 
         // Function to draw the food
         function drawFood() {
-            ctx.fillStyle = "#FF0000";
-            ctx.fillRect(food.x, food.y, GRID_SIZE, GRID_SIZE);
+            ctx.drawImage(foodImage, food.x, food.y, GRID_SIZE, GRID_SIZE);
         }
     </script>
 </body>
